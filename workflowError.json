@@ -1,0 +1,306 @@
+{
+  "active": false,
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-01-07T10:29:41.212Z",
+  "id": "9xZXC0dhBMS34gPe",
+  "meta": null,
+  "name": "Error",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "225cdf49-0a4e-4660-a165-5fd262e43d8a",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        460,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "206784276",
+        "text": "=Внимание произошла ошибка!\nРабочий процесс {{$json[\"workflow\"][\"name\"]}}\nСсылка на логи: <a href=\"{{$json[\"execution\"][\"url\"]}}\">{{$json[\"execution\"][\"id\"]}}</a>\nРежим запуска сценария: {{$json[\"execution\"][\"mode\"]}}\nОписание ошибки: {{$json[\"execution\"][\"error\"][\"message\"]}}",
+        "additionalFields": {
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "c1e0124a-1c9b-45af-8e2d-23f12069e735",
+      "name": "Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        660,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "updates": [
+          "*"
+        ],
+        "additionalFields": {}
+      },
+      "id": "0026a8ba-9d11-42e7-a902-f16fd300483c",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1,
+      "position": [
+        20,
+        500
+      ],
+      "webhookId": "f5c7ebf8-6dd2-46f7-b8d0-fb9efa410fb4",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "workfiow_id",
+              "value": "={{ $json.workflow.id }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $json.execution.error.message }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "15d2ad24-db11-42c9-999d-17ab6ec452cc",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        840,
+        620
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return[\n  {\n    \"execution\": {\n      \"id\": \"2383\",\n      \"url\": \"https://n8n.makees.site/workflow/21/executions/2383\",\n      \"error\": {\n        \"context\": {},\n        \"name\": \"NodeApiError\",\n        \"timestamp\": 1696179710571,\n        \"severity\": \"warning\",\n        \"node\": {\n          \"parameters\": {\n            \"authentication\": \"oAuth2\",\n            \"resource\": \"sheet\",\n            \"operation\": \"clear\",\n            \"documentId\": {\n              \"__rl\": true,\n              \"value\": \"1_9LgkTKoyqjtKD4zr8yrpiS8B626zwwShptCgpfJhoE\",\n              \"mode\": \"list\",\n              \"cachedResultName\": \"За сотку\",\n              \"cachedResultUrl\": \"https://docs.google.com/spreadsheets/d/1_9LgkTKoyqjtKD4zr8yrpiS8B626zwwShptCgpfJhoE/edit?usp=drivesdk\"\n            },\n            \"sheetName\": {\n              \"__rl\": true,\n              \"value\": 578122519,\n              \"mode\": \"list\",\n              \"cachedResultName\": \"Треки ZS БП\",\n              \"cachedResultUrl\": \"https://docs.google.com/spreadsheets/d/1_9LgkTKoyqjtKD4zr8yrpiS8B626zwwShptCgpfJhoE/edit#gid=578122519\"\n            },\n            \"clear\": \"wholeSheet\",\n            \"keepFirstRow\": false\n          },\n          \"id\": \"0081f29d-cc24-40cc-8285-85c7b3bfc07d\",\n          \"name\": \"очистка таблицы треков белпочты1\",\n          \"type\": \"n8n-nodes-base.googleSheets\",\n          \"typeVersion\": 4,\n          \"position\": [\n            -3520,\n            2140\n          ],\n          \"credentials\": {\n            \"googleSheetsOAuth2Api\": {\n              \"id\": \"8\",\n              \"name\": \"Google Mn8n\"\n            }\n          }\n        },\n        \"httpCode\": \"ECONNRESET\",\n        \"description\": \"socket hang up\",\n        \"message\": \"socket hang up\",\n        \"stack\": \"NodeApiError: socket hang up\\n    at Object.apiRequest (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Google/Sheet/v2/transport/index.js:92:15)\\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)\\n    at GoogleSheet.spreadsheetGetSheetNameById (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Google/Sheet/v2/helpers/GoogleSheet.js:55:26)\\n    at Object.router (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Google/Sheet/v2/actions/router.js:65:33)\\n    at Workflow.runNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-workflow/dist/Workflow.js:652:28)\\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/dist/WorkflowExecute.js:596:53\"\n      },\n      \"lastNodeExecuted\": \"очистка таблицы треков белпочты1\",\n      \"mode\": \"trigger\"\n    },\n    \"workflow\": {\n      \"id\": \"21\",\n      \"name\": \"Za sotku\"\n    }\n  }\n]"
+      },
+      "id": "cd655994-26d0-4925-9ac2-a90a93a67b97",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        300,
+        620
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "workflowId": "=28"
+      },
+      "id": "af94dfeb-a2c2-4f24-93cf-70a45633068b",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        620
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "4384a6b9-29e8-4f69-a8cd-0dac17dd78db",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        820
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "b7c47f6d-0d5c-49ec-bc14-9c3c6bd72d3a",
+      "name": "No Operation, do nothing1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        840,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.workflow.id }}",
+              "value2": "27"
+            },
+            {
+              "value1": "={{ $json.workflow.id }}",
+              "value2": "26"
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "ea566c49-ec25-48b4-993a-3a2af1c5d89e",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        640,
+        640
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "993d1e41-d3d7-4a0f-86e2-f5862957e193",
+      "name": "No Operation, do nothing2",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.execution.error.message }}",
+              "value2": "Workflow-Execution has been canceled"
+            },
+            {
+              "value1": "={{ $json.execution.error.message }}",
+              "operation": "isEmpty"
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "e09cc8c3-4b69-47f8-8f9d-d5935e282817",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        460,
+        620
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-01-07T10:29:31.847Z",
+      "updatedAt": "2024-01-07T10:29:31.847Z",
+      "id": "BS91emH8oAeUeUG5",
+      "name": "err"
+    },
+    {
+      "createdAt": "2024-01-07T10:29:31.848Z",
+      "updatedAt": "2024-01-07T10:29:31.848Z",
+      "id": "NW6IQqISmITjGZRS",
+      "name": "bot"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2024-01-07T10:29:41.212Z",
+  "versionId": "59c5c6d8-ff43-4d13-9c24-2bc82b5f47b0"
+}
