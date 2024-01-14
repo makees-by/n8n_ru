@@ -1,0 +1,125 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-01-07T10:27:41.620Z",
+  "id": "T0ZcAwMlMYUzZLNb",
+  "meta": null,
+  "name": "Timer",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "timer",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "572357e1-3db0-4a80-a274-0d10d18b7252",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ],
+      "webhookId": "7b2dfb4c-d675-4eb4-8b51-913da76127e0"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $json.body.timer }}",
+        "unit": "seconds"
+      },
+      "id": "4c915d71-7712-40ef-a0cf-c6ae5b662c78",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        720,
+        460
+      ],
+      "webhookId": "8d11d1a4-e4c1-471a-beb5-3fb66dac20b2"
+    },
+    {
+      "parameters": {
+        "jsCode": "return (\n  [\n  {\n    \"headers\": {\n      \"host\": \"n8ns.makees.site\",\n      \"user-agent\": \"axios/0.21.4\",\n      \"content-length\": \"14\",\n      \"accept\": \"application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7\",\n      \"content-type\": \"application/json\",\n      \"x-forwarded-for\": \"172.18.0.1\",\n      \"x-forwarded-host\": \"n8ns.makees.site\",\n      \"x-forwarded-port\": \"443\",\n      \"x-forwarded-proto\": \"https\",\n      \"x-forwarded-server\": \"e8109027b64a\",\n      \"x-real-ip\": \"172.18.0.1\",\n      \"accept-encoding\": \"gzip\"\n    },\n    \"params\": {},\n    \"query\": {},\n    \"body\": {\n      \"timer\": \"10\"\n    }\n  }\n]\n);"
+      },
+      "id": "ff962ba2-9dd3-41c6-959a-03bda3b0d1ba",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        620
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "id": "22e3142d-ee97-48b8-908b-d309cdae254c",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        280,
+        620
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "9xZXC0dhBMS34gPe"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-01-06T10:16:22.935Z",
+      "updatedAt": "2024-01-06T10:16:22.935Z",
+      "id": "grLW74CmdwLIxxqL",
+      "name": "potap"
+    },
+    {
+      "createdAt": "2024-01-06T10:16:22.937Z",
+      "updatedAt": "2024-01-06T10:16:22.937Z",
+      "id": "raZE8lC0z7FYUuSz",
+      "name": "treck_check"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2024-01-14T12:03:59.000Z",
+  "versionId": "eedbdfaa-01c5-4c90-a8ba-a1911802c33d"
+}
