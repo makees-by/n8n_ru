@@ -1,0 +1,635 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Структурируем http ответ3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF7": {
+      "main": [
+        [
+          {
+            "node": "Создаем новую запись для трека",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "сравниваем статус",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "сравниваем статус": {
+      "main": [
+        [
+          {
+            "node": "Статус трека не поменялся",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "проверяем вручен ли заказ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Структурируем http ответ3": {
+      "main": [
+        [
+          {
+            "node": "Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "проверяем вручен ли заказ": {
+      "main": [
+        [
+          {
+            "node": "Ставим дату доставки и статус доставлено",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Изменяем статус доставки",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Входящий json1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Входящий json1": {
+      "main": [
+        [
+          {
+            "node": "Структурируем http ответ3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion": {
+      "main": [
+        [
+          {
+            "node": "IF7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Создаем новую запись для трека": {
+      "main": [
+        [
+          {
+            "node": "Создана новая запись в таблице статистики",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ставим дату доставки и статус доставлено": {
+      "main": [
+        [
+          {
+            "node": "Посылка доставлена, статус обновлён, дата доставки проставлена",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Изменяем статус доставки": {
+      "main": [
+        [
+          {
+            "node": "просто обновляем статус",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-01-07T10:26:46.388Z",
+  "id": "Xm0qAZ00x1yM001c",
+  "meta": null,
+  "name": "Statistic",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "Statistic",
+        "options": {}
+      },
+      "id": "79df0bcb-946e-4106-91ea-cdbfa204a010",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        520,
+        1200
+      ],
+      "webhookId": "aa91f96e-fe30-4ad2-9d7b-217ccc0f2851"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.property_treck_num }}",
+              "operation": "isEmpty"
+            }
+          ]
+        }
+      },
+      "id": "29a321ce-af2e-43d0-a9ad-cbba3e200e48",
+      "name": "IF7",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        840,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.property_actual_status }}",
+              "value2": "={{ $('Структурируем http ответ3').first().json['Статус и дата обновления'] }}"
+            }
+          ]
+        }
+      },
+      "id": "476b728d-d769-4900-86dd-23e3f0b8fa1e",
+      "name": "сравниваем статус",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "Трек номер",
+              "value": "={{ $json.body['Трек номер'] }}"
+            },
+            {
+              "name": "Статус и дата обновления",
+              "value": "={{ $json.body['Статус и дата обновления'] }}"
+            },
+            {
+              "name": "=индекс",
+              "value": "={{ $json.body.индекс.toInt() }}"
+            }
+          ],
+          "number": [
+            {
+              "name": "table",
+              "value": "={{ $json.body.table }}"
+            },
+            {
+              "name": "page",
+              "value": "={{ $json.body.page }}"
+            },
+            {
+              "name": "processID",
+              "value": "={{ $json.body.processID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d5bb501f-8928-4dd7-9640-51d1a69a8191",
+      "name": "Структурируем http ответ3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        860,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.property_actual_status }}",
+              "operation": "contains",
+              "value2": "Вручено "
+            },
+            {
+              "value1": "={{ $('Структурируем http ответ3').first().json['Статус и дата обновления'] }}",
+              "operation": "contains",
+              "value2": "выдано"
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "23d3b2a2-d4f2-4d6e-a344-c870994e479c",
+      "name": "проверяем вручен ли заказ",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        1080
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Этот модуль записывает треки и присваиваем им дату попадания и дату выдачи.\n",
+        "height": 246.38828204496534,
+        "width": 204.8047739816805
+      },
+      "id": "dce6b262-6144-41a7-b0c0-acc6bac7e19c",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        440,
+        740
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "65723a3a-0af4-4ab4-af1f-c5015996bce1",
+      "name": "Создана новая запись в таблице статистики",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        520
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "fae08d0e-1039-40ef-ba71-6c2e11499f9e",
+      "name": "Статус трека не поменялся",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        820
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "95c31f99-f3ea-45b4-a462-be9712d08728",
+      "name": "Посылка доставлена, статус обновлён, дата доставки проставлена",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        1060
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "79c23824-753a-43b1-94c3-33a1adbba7df",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        300,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return (\n[\n  {\n    \"headers\": {\n      \"host\": \"n8ns.makees.site\",\n      \"user-agent\": \"axios/0.21.4\",\n      \"content-length\": \"291\",\n      \"accept\": \"application/json,text/html,application/xhtml+xml,application/xml,text/*;q=0.9, image/*;q=0.8, */*;q=0.7\",\n      \"content-type\": \"application/json\",\n      \"x-forwarded-for\": \"172.18.0.1\",\n      \"x-forwarded-host\": \"n8ns.makees.site\",\n      \"x-forwarded-port\": \"443\",\n      \"x-forwarded-proto\": \"https\",\n      \"x-forwarded-server\": \"316b8289a2b8\",\n      \"x-real-ip\": \"172.18.0.1\",\n      \"accept-encoding\": \"gzip\"\n    },\n    \"params\": {},\n    \"query\": {},\n    \"body\": {\n      \"table\": \"1zZYqGPITkjr6NRrHBOcAgItgG_6YZf4c8kYVHnrilkQ\",\n      \"page\": \"2093517410\",\n      \"Трек номер\": \"BY080030985618\",\n      \"Статус и дата обновления\": \"Почтовое отправление прибыло на ОПС выдачи\",\n      \"индекс\": \"7410159\",\n      \"processID\": \"ForIra\"\n    }\n  }\n]\n  );"
+      },
+      "id": "5abf5c38-941b-4ce2-949c-64bae0be06dd",
+      "name": "Входящий json1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        520,
+        1040
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "db256969-1224-4de8-8e4c-3e666d570bf3",
+          "mode": "list",
+          "cachedResultName": "Project “Potap”",
+          "cachedResultUrl": "https://www.notion.so/db25696912244de88e4c3e666d570bf3"
+        },
+        "returnAll": true,
+        "filterType": "manual",
+        "filters": {
+          "conditions": [
+            {
+              "key": "Name|title",
+              "condition": "contains",
+              "titleValue": "={{ $json['Трек номер'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7de45fa7-4db7-4182-a24d-81b80cc059d2",
+      "name": "Notion",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.1,
+      "position": [
+        860,
+        1000
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "notionApi": {
+          "id": "sy6HyLQ0KZpe1h9E",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "db256969-1224-4de8-8e4c-3e666d570bf3",
+          "mode": "list",
+          "cachedResultName": "Project “Potap”",
+          "cachedResultUrl": "https://www.notion.so/db25696912244de88e4c3e666d570bf3"
+        },
+        "title": "={{ $('Структурируем http ответ3').item.json.processID }}_{{ $('Структурируем http ответ3').item.json['Трек номер'] }}",
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "treck_num|rich_text",
+              "textContent": "={{ $('Структурируем http ответ3').item.json['Трек номер'] }}"
+            },
+            {
+              "key": "Process_ID|rich_text",
+              "textContent": "={{ $('Структурируем http ответ3').item.json.processID }}"
+            },
+            {
+              "key": "index|number",
+              "numberValue": "={{ $('Структурируем http ответ3').item.json.индекс }}"
+            },
+            {
+              "key": "Table|rich_text",
+              "textContent": "={{ $('Структурируем http ответ3').item.json.table }}"
+            },
+            {
+              "key": "Page|rich_text",
+              "textContent": "={{ $('Структурируем http ответ3').item.json.page }}"
+            },
+            {
+              "key": "Actual_status|rich_text",
+              "textContent": "={{ $('Структурируем http ответ3').item.json['Статус и дата обновления'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "34ba833e-e182-41f9-a5ea-26a964eea5ba",
+      "name": "Notion3",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.1,
+      "position": [
+        460,
+        460
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "notionApi": {
+          "id": "sy6HyLQ0KZpe1h9E",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "c947b0fb-9d9f-453b-b6f6-5af4f2d7af36",
+      "name": "просто обновляем статус",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        1300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "db256969-1224-4de8-8e4c-3e666d570bf3",
+          "mode": "list",
+          "cachedResultName": "Project “Potap”",
+          "cachedResultUrl": "https://www.notion.so/db25696912244de88e4c3e666d570bf3"
+        },
+        "title": "={{ $('Структурируем http ответ3').item.json.processID }}_{{ $('Структурируем http ответ3').item.json['Трек номер'] }}",
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "treck_num|rich_text",
+              "textContent": "={{ $('Структурируем http ответ3').item.json['Трек номер'] }}"
+            },
+            {
+              "key": "Process_ID|rich_text",
+              "textContent": "={{ $('Структурируем http ответ3').item.json.processID }}"
+            },
+            {
+              "key": "index|number",
+              "numberValue": "={{ $('Структурируем http ответ3').item.json.индекс }}"
+            },
+            {
+              "key": "Table|rich_text",
+              "textContent": "={{ $('Структурируем http ответ3').item.json.table }}"
+            },
+            {
+              "key": "Page|rich_text",
+              "textContent": "={{ $('Структурируем http ответ3').item.json.page }}"
+            },
+            {
+              "key": "Actual_status|rich_text",
+              "textContent": "={{ $('Структурируем http ответ3').item.json['Статус и дата обновления'] }}"
+            },
+            {
+              "key": "Date_add|date",
+              "date": "={{ $now.toISO() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "adbb6eba-1531-4c78-8cc5-589a64b4b939",
+      "name": "Создаем новую запись для трека",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.1,
+      "position": [
+        760,
+        520
+      ],
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 3000,
+      "credentials": {
+        "notionApi": {
+          "id": "sy6HyLQ0KZpe1h9E",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Actual_status|rich_text",
+              "textContent": "={{ $('Структурируем http ответ3').item.json['Статус и дата обновления'] }}"
+            },
+            {
+              "key": "Date_ToClosed|date",
+              "date": "={{ $now.toISO() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0c05e32b-7f31-4ac0-94ba-84dd9aab0c24",
+      "name": "Ставим дату доставки и статус доставлено",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.1,
+      "position": [
+        1380,
+        1060
+      ],
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 3000,
+      "credentials": {
+        "notionApi": {
+          "id": "sy6HyLQ0KZpe1h9E",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Actual_status|rich_text",
+              "textContent": "={{ $('Структурируем http ответ3').item.json['Статус и дата обновления'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cd1c4574-4551-4006-8aa1-3bdc05584643",
+      "name": "Изменяем статус доставки",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.1,
+      "position": [
+        1200,
+        1300
+      ],
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 3000,
+      "credentials": {
+        "notionApi": {
+          "id": "sy6HyLQ0KZpe1h9E",
+          "name": "Notion account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "9xZXC0dhBMS34gPe"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-01-06T10:16:22.934Z",
+      "updatedAt": "2024-01-06T10:16:22.934Z",
+      "id": "gHcxFA3Ts7cVbnwX",
+      "name": "json"
+    },
+    {
+      "createdAt": "2024-01-06T10:16:22.935Z",
+      "updatedAt": "2024-01-06T10:16:22.935Z",
+      "id": "grLW74CmdwLIxxqL",
+      "name": "potap"
+    },
+    {
+      "createdAt": "2024-01-06T10:16:22.937Z",
+      "updatedAt": "2024-01-06T10:16:22.937Z",
+      "id": "raZE8lC0z7FYUuSz",
+      "name": "treck_check"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2024-01-14T12:03:14.000Z",
+  "versionId": "1cbccd30-3b43-4dbe-8faa-53e96c76aeb3"
+}
