@@ -1,0 +1,439 @@
+{
+  "active": true,
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ForIra": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ForVika": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ForNat": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ForAnn": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-01-06T17:23:35.606Z",
+  "id": "4z0ef3Rch2RTfOel",
+  "meta": null,
+  "name": "Pachatak",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "pachatak",
+        "options": {}
+      },
+      "id": "d1d2a731-39b3-463b-8a22-1f8464ab93c3",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        780
+      ],
+      "webhookId": "7d9e5eda-30f3-4640-a943-bff40feb982c"
+    },
+    {
+      "parameters": {},
+      "id": "f2a238d3-77c9-4516-b7c0-fce9444a8e36",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        460,
+        1100
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "ProcessID",
+              "stringValue": "ForIra"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "79a09498-99b7-40d7-973e-801952a16fb6",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        640,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://n8n.makees.ru/webhook/modul_Start",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "ProcessID",
+              "value": "={{ $json.query.procID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0e69c5fd-d89a-42bc-9cec-4181c4588692",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        820,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "ProcessID",
+              "stringValue": "zsForvika"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d50e5a16-0472-480c-ae14-041d81217eef",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        620,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "ProcessID",
+              "stringValue": "ForNat"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3838b729-f6d7-4565-9073-351275235491",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        740,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "ProcessID",
+              "stringValue": "ForAnn"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ac871f16-a239-43ff-b596-aab9cd810b57",
+      "name": "Edit Fields3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        900,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7,
+              "triggerAtMinute": 2
+            }
+          ]
+        }
+      },
+      "id": "f7f9faea-9107-4247-ac7c-9603ec55bfc9",
+      "name": "ForIra",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        440,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 20,
+              "triggerAtMinute": 3
+            }
+          ]
+        }
+      },
+      "id": "183fdf8f-8326-4cd9-8d97-47c462a9b8f0",
+      "name": "ForVika",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        420,
+        680
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 1,
+              "triggerAtMinute": 1
+            }
+          ]
+        }
+      },
+      "id": "66591d9a-14c4-47b4-b006-2759afc0c05d",
+      "name": "ForNat",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        540,
+        520
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 4,
+              "triggerAtMinute": 7
+            }
+          ]
+        }
+      },
+      "id": "b809bc15-9b49-489e-99b8-8d13601d60a5",
+      "name": "ForAnn",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        700,
+        400
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "ProcessID",
+              "stringValue": "={{ $json.query.procID }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f5e93d8f-74ac-4383-b500-79fcbf3f1e46",
+      "name": "Edit Fields4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        840,
+        980
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Прод\nhttps://n8n.makees.ru/webhook/pachatak?procID=ForIra\nhttps://n8n.makees.ru/webhook/pachatak?procID=zsForvika"
+      },
+      "id": "2188f41f-ae2f-42e2-a3e1-dbb578a8c51d",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Тестовый\nhttps://n8ns.makees.site/webhook-test/7d9e5eda-30f3-4640-a943-bff40feb982c?procID=ForIra",
+        "width": 359.8929461929662
+      },
+      "id": "17585456-4507-462e-9225-db5b5f48b8ed",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return (\n  [\n  {\n    \"headers\": {\n      \"host\": \"n8n.makees.ru\",\n      \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",\n      \"accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\",\n      \"accept-encoding\": \"gzip, deflate, br\",\n      \"accept-language\": \"ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7\",\n      \"cookie\": \"rl_page_init_referrer=RudderEncrypt%3AU2FsdGVkX19RThTiX81aCcBr2mC0Fif6pTTg8gnn9kQ%3D; rl_page_init_referring_domain=RudderEncrypt%3AU2FsdGVkX1%2BomQ7NZtKMMZwYMMC1aRXSmvlEHLzLS9g%3D; n8n-auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgzMjdhODAzLTJiMjctNGYxZS1iNWQ5LWE3ZWM2NzdjZmFiOCIsImVtYWlsIjoibWFrZWVzLmJ5QG1haWwucnUiLCJwYXNzd29yZCI6IjZhODdiZGI3OTM1YWMwOWUwYTBjOTU1YmU3ZDU2NjNhYWZmZTQyMDgxOGNkOTI2OWY5YThiYjNlNDA2ODAwOGQiLCJpYXQiOjE3MDUwNzIyMTIsImV4cCI6MTcwNTY3NzAxMn0.lGUAgOIU7lqBvZ-03njChq6muIGx32h1f1RxXttB1OM; rl_anonymous_id=RudderEncrypt%3AU2FsdGVkX18tgxQ4Ua9SHf3i6qiPxMkKxGJq47nm6uc9KltAGXBe%2BVGJPUTPr364A2a97axjD4VIZVH2Ph3I0g%3D%3D; rl_user_id=RudderEncrypt%3AU2FsdGVkX1%2Bc1UXtz4MdXw2lDTlfT8%2BZzQSqMJ53JVeM2cR1UymepszYu3Az3xQahPatnBrcSe7kiiZBS5YKtb%2Bt1kvbBGNNLXz0RcYlIebtOEeOgMbReU8iuXuTB1QAl7mxbB7ZxqRSFEtfI2qWdL5sdolmGvt%2BS7It%2FRtmM7s%3D; rl_trait=RudderEncrypt%3AU2FsdGVkX1%2FDKAjQqXc9yG8ums9TSXPIXQTf%2F%2FYifY%2FpxKrc9c0hzRDorxo1RNMeTUDniSibmLj%2BIFuIXb7q%2Bd%2BiJxgADiZzUquTWh4fYOGx4OAIvNZpCgr0mOk7zYuc22XlOKBkQJgzMw8e1HcJsg%3D%3D; ph_phc_4URIAm1uYfJO7j8kWSe0J8lc8IqnstRLS7Jx8NcakHo_posthog=%7B%22distinct_id%22%3A%22c52ee26f1c5e7d928506250aa6d7fa6f3c7268c1d7178cf26bd77c625c6e4e93%238327a803-2b27-4f1e-b5d9-a7ec677cfab8%22%2C%22%24sesid%22%3A%5B1705150229619%2C%22018d02db-6648-77ff-ac33-9d7487194865%22%2C1705149949512%5D%7D; rl_session=RudderEncrypt%3AU2FsdGVkX1%2FK%2Fcz3r0JK6rSbo6y0tdSxYddzWpymVpGuV2E2%2F5LvO98lASd5HgWDe0AVOOSBEEzoGrsj02AqMGRvhrEckEfUvRSw9zBqQ%2FGRyaqpMAGL382aaDECItlDWhTp99wu%2FPrrd6qGvmlENg%3D%3D\",\n      \"if-none-match\": \"W/\\\"22-6OS7cK0FzqnV2NeDHdOSGS1bVUs\\\"\",\n      \"referer\": \"https://n8n.makees.ru/workflow/4z0ef3Rch2RTfOel\",\n      \"sec-ch-ua\": \"\\\"Not_A Brand\\\";v=\\\"8\\\", \\\"Chromium\\\";v=\\\"120\\\", \\\"Google Chrome\\\";v=\\\"120\\\"\",\n      \"sec-ch-ua-mobile\": \"?0\",\n      \"sec-ch-ua-platform\": \"\\\"Windows\\\"\",\n      \"sec-fetch-dest\": \"document\",\n      \"sec-fetch-mode\": \"navigate\",\n      \"sec-fetch-site\": \"same-origin\",\n      \"sec-fetch-user\": \"?1\",\n      \"upgrade-insecure-requests\": \"1\",\n      \"x-forwarded-for\": \"37.215.40.82\",\n      \"x-forwarded-host\": \"n8n.makees.ru\",\n      \"x-forwarded-port\": \"443\",\n      \"x-forwarded-proto\": \"https\",\n      \"x-forwarded-server\": \"e95093070eee\",\n      \"x-real-ip\": \"37.215.40.82\"\n    },\n    \"params\": {},\n    \"query\": {\n      \"procID\": \"ForIra\"\n    }\n  }\n]\n);"
+      },
+      "id": "0f471f26-ae4e-4c9c-9ef7-a4e57e7e9f0c",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        800
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "9xZXC0dhBMS34gPe"
+  },
+  "staticData": {
+    "node:ForIra": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2024-01-06T10:16:22.935Z",
+      "updatedAt": "2024-01-06T10:16:22.935Z",
+      "id": "grLW74CmdwLIxxqL",
+      "name": "potap"
+    },
+    {
+      "createdAt": "2024-01-06T10:16:22.937Z",
+      "updatedAt": "2024-01-06T10:16:22.937Z",
+      "id": "raZE8lC0z7FYUuSz",
+      "name": "treck_check"
+    }
+  ],
+  "triggerCount": 2,
+  "updatedAt": "2024-01-14T12:01:37.000Z",
+  "versionId": "dae69a27-c161-4963-bdec-e831b2de80a9"
+}
